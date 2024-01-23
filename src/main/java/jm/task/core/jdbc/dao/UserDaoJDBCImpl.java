@@ -17,7 +17,7 @@ UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS newdb.users" +
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS users" +
                     "(id mediumint not null auto_increment," +
                     " name VARCHAR(50), " +
                     "lastname VARCHAR(50), " +
@@ -32,7 +32,7 @@ UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("Drop table if exists newdb.users");
+            statement.executeUpdate("Drop table if exists users");
             System.out.println("Таблица удалена");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,7 +41,7 @@ UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        String sql = "INSERT INTO newdb.users(name, lastname, age) VALUES(?,?,?)";
+        String sql = "INSERT INTO users(name, lastname, age) VALUES(?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
@@ -54,7 +54,7 @@ UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM newdb.users WHERE id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
             statement.setLong(1, id);
             statement.executeUpdate();
             System.out.println("User с id " + id + " удален");
@@ -66,7 +66,7 @@ UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> allUser = new ArrayList<>();
-        String sql = "SELECT id, name, lastName, age from newdb.users";
+        String sql = "SELECT id, name, lastName, age from users";
 
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(sql);
@@ -88,7 +88,7 @@ UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        String sql = "DELETE FROM newdb.users";
+        String sql = "DELETE FROM users";
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(sql);
             System.out.println("Таблица очищена");
