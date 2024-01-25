@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +15,7 @@ public class User {
 
     @Column
     private String lastName;
+
 
     @Column
     private Byte age;
@@ -73,4 +74,15 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, name, lastName, age);
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+
+    }
 }
+
