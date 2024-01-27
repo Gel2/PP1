@@ -8,6 +8,10 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 public class Util {
     // реализуйте настройку соеденения с БД
@@ -35,5 +39,18 @@ public class Util {
             e.printStackTrace();
         }
         return sessionFactory;
+    }
+
+    public static Connection getConnectionJDBC() {
+        Connection connection = null;
+        try {
+            Class.forName(DRIVER);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("Connection OK");
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Connection ERROR");
+            e.printStackTrace();
+        }
+        return connection;
     }
 }
